@@ -1,0 +1,17 @@
+{
+  "name": "code-review-coach",
+  "version": "1.0.0",
+  "description": "AI-powered code review and release notes generator",
+  "main": "run-app.js",
+  "scripts": {
+    "start": "node run-app.js",
+    "check": "node check-setup.js",
+    "setup": "cd backend && npm install",
+    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && python3 -m http.server 5500",
+    "help": "node -e \"console.log('\\n📖 Quick Start:\\n\\n1. Run: npm run setup\\n2. Edit backend/.env with your BOB_API_KEY\\n3. Run: npm start\\n\\nSee README.md for details.\\n')\""
+  },
+  "keywords": ["code-review", "ai", "ibm-bob", "release-notes"],
+  "author": "",
+  "license": "MIT"
+}

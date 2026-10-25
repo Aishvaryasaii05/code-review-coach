@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: code-review-coach
+    runtime: node
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BOB_API_KEY
+        sync: false
+      - key: BOB_TEAM_ID
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://code-review-coach.onrender.com

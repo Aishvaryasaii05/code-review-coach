@@ -1,0 +1,118 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║                                                                   ║
+║              🚀  CODE REVIEW COACH - GET STARTED  🚀              ║
+║                                                                   ║
+║           AI-Powered Code Review & Release Notes Generator        ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+⚡ QUICK START (3 Steps)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  Install dependencies:
+    npm run setup
+
+2️⃣  Add your API key:
+    Edit backend/.env and set BOB_API_KEY=your_key_here
+    Get key from: https://bob.ibm.com/admin/apikeys
+
+3️⃣  Start the app:
+    npm start
+
+
+✅ THEN OPEN IN BROWSER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    👉  http://localhost:5500
+
+
+📖 WHAT YOU CAN DO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ CODE REVIEW TAB
+  Paste any code and get instant AI feedback on:
+  • Bugs and errors
+  • Security vulnerabilities
+  • Code quality issues
+  • Best practice violations
+
+✓ RELEASE NOTES TAB
+  Paste a git diff or changelog and generate:
+  • Professional release notes
+  • Categorized changes (Added/Fixed/Changed)
+  • Audience-specific language
+
+✓ HISTORY TAB
+  Browse all your past reviews and release notes
+
+
+🛠️ ALTERNATIVE START METHODS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Option A - Automated launcher:
+    node run-app.js
+
+Option B - Bash script (Linux/Mac):
+    chmod +x start.sh
+    ./start.sh
+
+Option C - Manual (2 terminals):
+    Terminal 1: cd backend && npm start
+    Terminal 2: cd frontend && python3 -m http.server 5500
+
+
+📋 REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Required:
+  ✓ Node.js 18 or higher (24+ recommended)
+  ✓ npm (comes with Node.js)
+  ✓ Python 3 (for frontend server)
+
+Optional:
+  ✓ IBM Bob Shell (for AI features)
+
+Check what you have:
+    node --version
+    npm --version
+    python3 --version
+    bob --version
+
+
+🔍 NEED MORE HELP?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📄 README.md         - Complete setup and quick reference
+📄 README.md        - Full documentation
+
+
+🐛 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Can't connect to localhost:5500?
+  → Make sure you ran 'npm start' and see the success message
+
+"BOB_API_KEY is not set" error?
+  → Edit backend/.env and add your key from bob.ibm.com/admin/apikeys
+
+Port already in use?
+  → Change PORT in backend/.env to a different number
+
+Backend errors?
+  → Make sure you ran 'npm run setup' first
+
+
+💡 PRO TIPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Drag and drop code files directly into the input area
+• Use Ctrl+Enter to submit without clicking the button
+• Download release notes as Markdown or plain text
+• All reviews are saved in the History tab
+
+
+═══════════════════════════════════════════════════════════════════
+
+Made with ❤️  using IBM Bob IDE
+
+═══════════════════════════════════════════════════════════════════

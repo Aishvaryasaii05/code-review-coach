@@ -1,0 +1,157 @@
+
+╔═══════════════════════════════════════════════════════════════════╗
+║                                                                   ║
+║                    🚀  CODE REVIEW COACH  🚀                      ║
+║                                                                   ║
+║              You're seeing "Can't connect" in your browser?       ║
+║                  That's because the servers aren't running yet!   ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+
+⚡ THREE STEPS TO SUCCESS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open your terminal in this folder and run these commands:
+
+
+1️⃣  INSTALL (one time only)
+    ─────────────────────────────────────────────────────────────────
+    npm run setup
+    ─────────────────────────────────────────────────────────────────
+    This installs all the required packages. Takes ~30 seconds.
+
+
+2️⃣  CONFIGURE (one time only)
+    ─────────────────────────────────────────────────────────────────
+    Edit the file:  backend/.env
+    
+    Add your API key:  BOB_API_KEY=paste_your_key_here
+    
+    Get your key from:  https://bob.ibm.com/admin/apikeys
+    ─────────────────────────────────────────────────────────────────
+
+
+3️⃣  START
+    ─────────────────────────────────────────────────────────────────
+    npm start
+    ─────────────────────────────────────────────────────────────────
+    This starts both servers. Keep this terminal open!
+
+
+🌐 THEN OPEN IN BROWSER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    👉  http://localhost:5500
+
+    You'll see a beautiful dark-themed interface with three tabs:
+    
+    ✓ Code Review     - Paste code, get AI feedback
+    ✓ Release Notes   - Paste diffs, generate notes
+    ✓ History         - View all past work
+
+
+💡 SUPER QUICK CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Want to verify everything is ready? Run:
+
+    npm run check
+
+This will tell you exactly what's missing (if anything).
+
+
+🎯 WHAT EACH COMMAND DOES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+npm start       → Starts both frontend and backend servers
+npm run setup   → Installs all dependencies  
+npm run check   → Verifies your setup is correct
+npm run help    → Shows quick help message
+
+
+🔧 ALTERNATIVE START METHODS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If "npm start" doesn't work, try:
+
+Method A - Node script:
+    node run-app.js
+
+Method B - Bash script (Linux/Mac only):
+    chmod +x start.sh
+    ./start.sh
+
+Method C - Manual (two separate terminals):
+    Terminal 1:  cd backend && npm start
+    Terminal 2:  cd frontend && python3 -m http.server 5500
+
+
+🐛 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ "node: command not found"
+   → Install Node.js from https://nodejs.org/ (need version 18+)
+
+❌ "Cannot find module"
+   → Run: npm run setup
+
+❌ "BOB_API_KEY is not set"
+   → Edit backend/.env and add your API key
+
+❌ "EADDRINUSE" or "Port already in use"
+   → Kill the process or change PORT in backend/.env
+
+❌ "python3: command not found" (Windows)
+   → Use "py -m http.server 5500" instead
+
+❌ Browser shows "This site can't be reached"
+   → Make sure you ran "npm start" and see success message
+
+
+📚 MORE HELP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Read these files for detailed help:
+
+📄 README.md             - Complete setup, usage, and file guide
+📄 README.md             - Complete documentation
+
+
+✨ WHAT MAKES THIS COOL?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ AI-powered code reviews (finds bugs, security issues, bad practices)
+✓ Automatic release note generation (from git diffs)
+✓ Beautiful dark VS Code-inspired theme
+✓ All your work saved in local SQLite database
+✓ Drag & drop files
+✓ Keyboard shortcuts
+✓ Export as Markdown or plain text
+
+
+🎬 FIRST TIME DEMO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After you start the app:
+
+1. Open http://localhost:5500
+2. Click "Code Review" tab
+3. Paste this code:
+
+   function login(user) {
+     return eval("SELECT * FROM users WHERE name='" + user + "'");
+   }
+
+4. Click "Review Code"
+5. See the AI catch the SQL injection vulnerability! 🔒
+
+
+═══════════════════════════════════════════════════════════════════
+
+Still stuck? Check these files or run: npm run check
+
+Made with ❤️  using IBM Bob IDE
+
+═══════════════════════════════════════════════════════════════════
+

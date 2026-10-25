@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Review Coach</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="features.css" />
+</head>
+<body>
+  <!-- ── Toast notification ──────────────────────────────────────────────── -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- ── Theme Toggle ─────────────────────────────────────────────────────── -->
+  <button id="theme-toggle" type="button" aria-label="Toggle theme">
+    <svg viewBox="0 0 16 16" fill="none"><path d="M14 8.5c-.8 3.3-3.8 5.5-7.2 4.8A6 6 0 0 1 2.2 8.8C1.5 5.4 3.7 2.3 7 1.5c.5-.1.6.5.2.8C5.8 3.4 5.3 5.2 6 7c1 2.4 3.6 3.6 6.2 2.8.5-.2.9.3.8.7Z" fill="currentColor"/></svg>
+    Dark
+  </button>
+
+  <!-- ── Header ─────────────────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="mobile-sections-wrap">
+        <button id="section-back-button" class="section-back-button hidden" type="button" aria-label="Go back">⟵</button>
+        <button id="mobile-sections-toggle" class="mobile-sections-toggle" type="button" aria-label="Open sections menu" aria-expanded="false" aria-controls="mobile-sections-menu">
+          <span class="mobile-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+        </button>
+        <nav id="mobile-sections-menu" class="mobile-sections-menu hidden" aria-label="Mobile sections">
+          <button type="button" data-mobile-tab="home">Home</button>
+          <button type="button" data-mobile-tab="review">Code Review</button>
+          <button type="button" data-mobile-tab="release-notes">Release Notes</button>
+          <button type="button" data-mobile-tab="history">History</button>
+          <button type="button" data-mobile-tab="dashboard">Dashboard</button>
+        </nav>
+      </div>
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="4" y="3" width="16" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M8 8h8M8 12h5M8 16l2 2 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <h1 class="logo-name">Code Review Coach</h1>
+          <p class="logo-tagline">AI-powered code review &amp; release notes</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main ───────────────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <div class="app-top-nav" aria-label="Section navigation">
+      <button class="footer-nav-button" id="top-prev" type="button" aria-label="Previous section">←</button>
+      <span>Review workflow</span>
+      <button class="footer-nav-button" id="top-next" type="button" aria-label="Next section">→</button>
+    </div>
+
+    <!-- ── Tab bar ──────────────────────────────────────────────────────── -->
+    <nav class="tab-bar" role="tablist" aria-label="Main navigation">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-home" data-tab="home">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m2 7 6-5 6 5v7H9.5V9h-3v5H2V7Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        Home
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-review" data-tab="review">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 3h12M2 7h8M2 11h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Code Review
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-release-notes"  data-tab="release-notes">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12M3 7l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Release Notes
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-history"        data-tab="history">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        History
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-dashboard" data-tab="dashboard">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="10" width="3" height="4" fill="currentColor"/><rect x="6.5" y="6" width="3" height="8" fill="currentColor"/><rect x="11" y="2" width="3" height="12" fill="currentColor"/></svg>
+        Dashboard
+      </button>
+    </nav>
+    <section id="tab-home" class="tab-panel active" role="tabpanel" aria-label="How Code Review Coach works">
+      <div class="home-intro">
+        <p class="home-kicker">YOUR REVIEW WORKFLOW</p>
+        <h2>From code to clear releases.</h2>
+        <p>Choose a step to see how Code Review Coach helps you inspect code, explain changes, and revisit past work.</p>
+      </div>
+
+      <aside class="home-visual" aria-label="A calm workspace for turning code into confident releases">
+        <div class="visual-copy">
+          <span class="visual-eyebrow">A clearer second pair of eyes</span>
+          <h3>Make the next change<br />feel easy to ship.</h3>
+          <p>Review the details, keep the context, and move forward with confidence.</p>
+          <div class="visual-stat-row">
+            <span><strong>01</strong> Inspect</span>
+            <span><strong>02</strong> Explain</span>
+            <span><strong>03</strong> Ship</span>
+          </div>
+        </div>
+        <div class="visual-art" aria-hidden="true">
+          <div class="review-mark">
+            <svg viewBox="0 0 220 220" fill="none">
+              <rect x="36" y="28" width="148" height="164" rx="18" stroke="currentColor" stroke-width="2"/>
+              <path d="M67 73h86M67 101h58M67 129h42" stroke="currentColor" stroke-width="7" stroke-linecap="round" opacity=".72"/>
+              <path d="m76 160 13 13 29-32" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="166" cy="52" r="15" fill="currentColor"/>
+              <path d="m159 52 5 5 9-11" stroke="#fbf7f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>thoughtful reviews<br />clearer releases</span>
+          </div>
+        </div>
+      </aside>
+
+      <div class="workflow-grid">
+        <article class="workflow-card workflow-review">
+          <div class="workflow-card-inner">
+            <div class="workflow-face workflow-front" aria-hidden="false">
+              <div class="workflow-card-top">
+                <span class="workflow-number">01</span>
+                <span class="workflow-label">CODE REVIEW</span>
+              </div>
+              <div class="workflow-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none"><path d="M10 7H7a2 2 0 0 0-2 2v3m5-5h15a2 2 0 0 1 2 2v3M10 7v20m0 0h15a2 2 0 0 0 2-2v-3M10 27H7a2 2 0 0 1-2-2v-3m0 0h22" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="m14 15 2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h3>Find the issues early.</h3>
+              <p>Get a focused review of code quality, bugs, and security risks.</p>
+              <button class="flip-control" type="button" data-flip-card aria-label="Show Code Review steps" aria-expanded="false">
+                See the steps <span aria-hidden="true">→</span>
+              </button>
+            </div>
+            <div class="workflow-face workflow-back" aria-hidden="true" inert>
+              <button class="flip-back" type="button" data-flip-card aria-label="Back to Code Review overview">← Overview</button>
+              <h3>Review code</h3>
+              <ol>
+                <li>Paste code or upload a supported file.</li>
+                <li>Choose the language and select <strong>Review Code</strong>.</li>
+                <li>Check the risk level, findings, and suggested fixes.</li>
+              </ol>
+              <button class="workflow-action" type="button" data-open-tab="review">Open Code Review <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </article>
+
+        <article class="workflow-card workflow-notes">
+          <div class="workflow-card-inner">
+            <div class="workflow-face workflow-front" aria-hidden="false">
+              <div class="workflow-card-top">
+                <span class="workflow-number">02</span>
+                <span class="workflow-label">RELEASE NOTES</span>
+              </div>
+              <div class="workflow-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none"><path d="M16 22V5m0 0-6 6m6-6 6 6M6 20v7h20v-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 16h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Make changes easy to follow.</h3>
+              <p>Turn a diff or changelog into clear, organized release notes.</p>
+              <button class="flip-control" type="button" data-flip-card aria-label="Show Release Notes steps" aria-expanded="false">
+                See the steps <span aria-hidden="true">→</span>
+              </button>
+            </div>
+            <div class="workflow-face workflow-back" aria-hidden="true" inert>
+              <button class="flip-back" type="button" data-flip-card aria-label="Back to Release Notes overview">← Overview</button>
+              <h3>Why release notes?</h3>
+              <ol>
+                <li>They explain what is new, fixed, or changed in an app update.</li>
+                <li>Code files make the app work; a diff shows what changed.</li>
+                <li>Teams share notes in app updates and version pages so users know what changed.</li>
+                <li>Paste or upload changes, choose an audience, then generate and export notes.</li>
+              </ol>
+              <button class="workflow-action" type="button" data-open-tab="release-notes">Open Release Notes <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </article>
+
+        <article class="workflow-card workflow-history">
+          <div class="workflow-card-inner">
+            <div class="workflow-face workflow-front" aria-hidden="false">
+              <div class="workflow-card-top">
+                <span class="workflow-number">03</span>
+                <span class="workflow-label">HISTORY</span>
+              </div>
+              <div class="workflow-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="11" stroke="currentColor" stroke-width="1.7"/><path d="M16 9.5V16l4 2.5M6 10V5m0 5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 10a11 11 0 1 0 2-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Pick up where you left off.</h3>
+              <p>Find saved reviews and release notes together in one place.</p>
+              <button class="flip-control" type="button" data-flip-card aria-label="Show History steps" aria-expanded="false">
+                See the steps <span aria-hidden="true">→</span>
+              </button>
+            </div>
+            <div class="workflow-face workflow-back" aria-hidden="true" inert>
+              <button class="flip-back" type="button" data-flip-card aria-label="Back to History overview">← Overview</button>
+              <h3>Revisit your work</h3>
+              <ol>
+                <li>Open <strong>History</strong> after a review or release note.</li>
+                <li>Select an entry to see its full details.</li>
+                <li>Use <strong>Refresh</strong> to load the latest entries.</li>
+              </ol>
+              <button class="workflow-action" type="button" data-open-tab="history">Open History <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 1 — CODE REVIEW                                                  -->
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <section id="tab-review" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-review-btn">
+      <div class="review-workspace-bar" aria-label="Review workspace navigation">
+        <div class="workspace-heading">
+          <span class="workspace-status-dot" aria-hidden="true"></span>
+          <strong>New Review</strong>
+          <span class="workspace-hint">Inspect code, understand risk, and move with confidence.</span>
+        </div>
+        <div class="workspace-links">
+          <button class="workspace-link active" type="button" aria-current="page">New Review</button>
+          <button class="workspace-link" type="button" data-open-tab="history">History</button>
+          <button class="workspace-link" type="button" data-open-tab="dashboard">Dashboard</button>
+        </div>
+      </div>
+      <div class="two-col">
+
+        <!-- ── Left: input ──────────────────────────────────────────────── -->
+        <div class="col col-input">
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Paste Your Code</span>
+              <div class="controls-row">
+                <label class="sr-only" for="review-file-name">File name</label>
+                <input id="review-file-name" class="review-file-name" type="text" placeholder="filename.js" autocomplete="off" />
+                <button id="load-sample-btn" class="btn btn-ghost btn-sm" type="button">Load sample</button>
+                <label for="language-select" class="sr-only">Language</label>
+                <select id="language-select" class="select">
+                  <option value="JavaScript">JavaScript</option>
+                  <option value="Python">Python</option>
+                  <option value="TypeScript">TypeScript</option>
+                  <option value="Java">Java</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Enhanced Toolbar -->
+            <div class="enhanced-toolbar">
+              <button class="toolbar-btn" type="button" onclick="document.getElementById('snippets-modal').classList.remove('hidden'); keyboardShortcuts.renderSnippetsList();" title="Open snippets library (Ctrl+K)">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M3 3h10M3 8h6M3 13h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Snippets
+              </button>
+              <button class="toolbar-btn" type="button" onclick="document.getElementById('templates-modal').classList.remove('hidden');" title="Apply review template">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M2 5h12M2 8h8M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Templates
+              </button>
+              <button id="save-snippet-btn" class="toolbar-btn" type="button" onclick="window.keyboardShortcuts?.saveSnippet()" title="Save current code (Ctrl+Shift+S)">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M13 14H3V2h7l3 3v9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Save
+              </button>
+              <button class="toolbar-btn" type="button" onclick="quickActions.prettifyCode()" title="Format code">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M4 3h8M3 8h10M4 13h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Format
+              </button>
+              <button class="toolbar-btn" type="button" onclick="quickActions.analyzeCode()" title="Analyze complexity">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M8 2v12M3 7l5-5 5 5M3 10l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Analyze
+              </button>
+            </div>
+
+            <!-- Drop zone -->
+            <div id="drop-zone" class="drop-zone" role="button" tabindex="0" aria-label="Drop a file here or click to upload">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span>Drop a <code>.js .py .ts .java</code> file here or <button type="button" id="file-pick-btn" class="link-btn">browse</button></span>
+              <input type="file" id="file-input" accept=".js,.py,.ts,.java,.txt" hidden aria-label="Upload code file" />
+            </div>
+
+            <textarea
+              id="code-input"
+              class="code-area"
+              placeholder="// Paste your code here…
+function example() {
+  return 'Hello, World!';
+}"
+              spellcheck="false"
+              aria-label="Code input"
+              rows="18"
+            ></textarea>
+
+            <div class="btn-row">
+              <button id="review-btn" class="btn btn-primary" type="button">
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M6 8.5l1.5 1.5L10.5 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span id="review-btn-text">Review Code</span>
+              </button>
+              <button id="clear-review-btn" class="btn btn-ghost" type="button">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Right: results ───────────────────────────────────────────── -->
+        <div class="col col-results">
+          <div class="panel" id="results-panel">
+
+            <!-- Empty state -->
+            <div id="review-empty" class="empty-state">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="2"/>
+                <path d="M14 18h20M14 24h14M14 30h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <p>Paste some code and click <strong>Review Code</strong> to get structured feedback from Bob.</p>
+            </div>
+
+            <!-- Loading state -->
+            <div id="review-loading" class="loading-state hidden">
+              <div class="spinner" aria-hidden="true"></div>
+              <p>Analyzing your code…</p>
+              <p class="muted">Bob is reading through every line.</p>
+            </div>
+
+            <!-- Error state -->
+            <div id="review-error" class="error-state hidden">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v6M12 16v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <p id="review-error-msg">Something went wrong.</p>
+              <button id="retry-review-btn" class="btn btn-ghost btn-sm" type="button">Retry</button>
+            </div>
+
+            <!-- Results content -->
+            <div id="review-results" class="hidden">
+              <div class="results-header">
+                <span id="risk-badge" class="risk-badge">LOW</span>
+                <span class="results-title">Review Complete</span>
+              </div>
+              <p id="review-summary" class="review-summary"></p>
+              <div id="issues-list" class="issues-list"></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 2 — RELEASE NOTES                                                -->
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <section id="tab-release-notes" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-release-notes-btn">
+      <div class="two-col">
+
+        <!-- ── Left: input ──────────────────────────────────────────────── -->
+        <div class="col col-input">
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Add Code Changes</span>
+            </div>
+            <div class="release-meta-fields">
+              <label class="release-field" for="release-version">
+                <span>Version <span class="muted">(optional)</span></span>
+                <input id="release-version" class="text-input" type="text" maxlength="40" placeholder="e.g. 1.2.0" autocomplete="off" />
+              </label>
+              <label class="release-field" for="release-audience">
+                <span>Audience</span>
+                <select id="release-audience" class="select">
+                  <option value="developers">Developers</option>
+                  <option value="customers">Customers</option>
+                  <option value="stakeholders">Stakeholders</option>
+                  <option value="product-managers">Product Managers</option>
+                  <option value="qa-testing">QA/Testing</option>
+                  <option value="support-team">Support Team</option>
+                  <option value="marketing">Marketing</option>
+                  <option value="executives">Executives</option>
+                </select>
+              </label>
+            </div>
+            <div id="notes-drop-zone" class="drop-zone notes-drop-zone" aria-label="Drop a diff, changelog, or source code file here">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span>Drop a diff, changelog, or code file here, or <button type="button" id="notes-file-pick-btn" class="link-btn">browse</button></span>
+              <input type="file" id="notes-file-input" accept=".diff,.patch,.txt,.md,.markdown,.log,.js,.jsx,.ts,.tsx,.py,.java,.html,.css,.json,.sql,.sh,.yaml,.yml,.xml" hidden aria-label="Upload a diff, changelog, or source code file" />
+              <span id="notes-file-name" class="muted hidden"></span>
+            </div>
+            <textarea
+              id="diff-input"
+              class="code-area"
+              placeholder="Paste a git diff, commit list, changelog, or code changes…
+
+diff --git a/src/auth.js b/src/auth.js
+--- a/src/auth.js
++++ b/src/auth.js
+@@ -12,6 +12,10 @@
++  // Add JWT refresh token support
++  if (token.isExpired()) refreshToken(token);"
+              spellcheck="false"
+              aria-label="Diff, changelog, or code changes input"
+              rows="18"
+            ></textarea>
+
+            <div class="btn-row">
+              <button id="notes-btn" class="btn btn-primary" type="button">
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M10 5l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span id="notes-btn-text">Generate Release Notes</span>
+              </button>
+              <button id="clear-notes-btn" class="btn btn-ghost" type="button">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Right: output ────────────────────────────────────────────── -->
+        <div class="col col-results">
+          <div class="panel" id="notes-results-panel">
+
+            <!-- Empty state -->
+            <div id="notes-empty" class="empty-state">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 20l4-4 4 4M24 16v16M32 28l-4 4-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p>Paste or upload code changes, then click <strong>Generate Release Notes</strong>.</p>
+            </div>
+
+            <!-- Loading -->
+            <div id="notes-loading" class="loading-state hidden">
+              <div class="spinner" aria-hidden="true"></div>
+              <p>Generating release notes…</p>
+              <p class="muted">Bob is summarizing your changes.</p>
+            </div>
+
+            <!-- Error -->
+            <div id="notes-error" class="error-state hidden">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v6M12 16v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <p id="notes-error-msg">Something went wrong.</p>
+              <button id="retry-notes-btn" class="btn btn-ghost btn-sm" type="button">Retry</button>
+            </div>
+
+            <!-- Output card -->
+            <div id="notes-output" class="hidden">
+              <div class="notes-header">
+                <div>
+                  <span class="notes-title">Release Notes</span>
+                  <p id="notes-meta" class="notes-meta hidden"></p>
+                </div>
+                <div class="notes-actions">
+                  <label class="sr-only" for="notes-format">Export format</label>
+                  <select id="notes-format" class="select notes-format">
+                    <option value="markdown">Markdown</option>
+                    <option value="text">Plain text</option>
+                  </select>
+                  <button id="download-notes-btn" class="btn btn-ghost btn-sm" type="button" aria-label="Download release notes">
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v8m0 0 3-3m-3 3L5 7M3 10v3h10v-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Download
+                  </button>
+                  <button id="copy-notes-btn" class="btn btn-ghost btn-sm" type="button">
+                  <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Copy
+                  </button>
+                </div>
+              </div>
+              <p id="notes-summary" class="notes-summary"></p>
+              <div id="notes-sections" class="notes-sections"></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 3 — HISTORY                                                       -->
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <section id="tab-history" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-history-btn">
+      <div class="panel panel-full">
+        <div class="panel-header">
+          <span class="panel-title">Review &amp; Release Notes History</span>
+          <button id="refresh-history-btn" class="btn btn-ghost btn-sm" type="button">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5M13.5 2.5V6H10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Refresh
+          </button>
+        </div>
+
+        <!-- Loading -->
+        <div id="history-loading" class="loading-state hidden">
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Loading history…</p>
+        </div>
+
+        <!-- Error -->
+        <div id="history-error" class="error-state hidden">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v6M12 16v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <p id="history-error-msg">Could not load history.</p>
+        </div>
+
+        <!-- Empty state -->
+        <div id="history-empty" class="empty-state hidden">
+          <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2"/>
+            <path d="M24 16v8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <p>No history yet. Submit a code review or generate release notes to get started.</p>
+        </div>
+
+        <!-- List -->
+        <ul id="history-list" class="history-list" role="list"></ul>
+
+        <!-- Expanded detail overlay -->
+        <div id="history-detail" class="history-detail hidden" role="region" aria-label="History detail">
+          <div class="history-detail-header">
+            <button id="history-back-btn" class="btn btn-ghost btn-sm" type="button">← Back to list</button>
+          </div>
+          <div id="history-detail-content"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <!-- TAB 4 — DASHBOARD                                                     -->
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <section id="tab-dashboard" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-dashboard-btn">
+      <div class="panel panel-full">
+        <div class="panel-header">
+          <span class="panel-title">Your Activity Dashboard</span>
+          <button onclick="statsDashboard.renderIntoDashboard(); statsDashboard.refresh();" class="btn btn-ghost btn-sm" type="button">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5M13.5 2.5V6H10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Refresh
+          </button>
+        </div>
+        <div id="dashboard-stats"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <section class="faq-section" aria-labelledby="faq-title">
+    <div class="faq-heading">
+      <p class="home-kicker">GOOD TO KNOW</p>
+      <h2 id="faq-title">Frequently asked questions.</h2>
+      <p>Everything you need to know before turning your next change into a clearer release.</p>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>How does Code Review Coach work?</summary>
+        <div class="faq-answer"><p>Paste code or upload a supported file, choose the language, and select Review Code. The assistant analyzes the code for risks, quality issues, and practical fixes.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>What technology is used?</summary>
+        <div class="faq-answer"><p>The project uses a lightweight HTML, CSS, and JavaScript frontend with a Node.js backend. AI analysis is connected through the configured Groq or IBM watsonx integration.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Which programming languages are supported?</summary>
+        <div class="faq-answer"><p>JavaScript, TypeScript, Python, Java, and other text-based source files can be reviewed. The selected language helps the assistant give more focused feedback.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I create release notes from code changes?</summary>
+        <div class="faq-answer"><p>Yes. Paste a diff, changelog, commit list, or source change, select an audience, and generate organized release notes that are easier to share.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Where can I find previous reviews?</summary>
+        <div class="faq-answer"><p>Use the History section to revisit saved code reviews and release notes. The Dashboard also summarizes review activity and common findings.</p></div>
+      </details>
+    </div>
+  </section>
+
+  <footer class="app-footer" aria-label="Application footer">
+    <button class="footer-nav-button" id="footer-prev" type="button" aria-label="Previous section">←</button>
+    <div class="footer-center">
+      <span class="footer-mark" aria-hidden="true">
+        <svg viewBox="0 0 20 20" fill="none"><rect x="2.5" y="2.5" width="15" height="15" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="m6 10 2.3 2.3L14 6.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span>Code Review Coach · 2026 · Built for clearer releases.</span>
+    </div>
+    <button class="footer-nav-button" id="footer-next" type="button" aria-label="Next section">→</button>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       ENHANCED FEATURES MODALS
+       ═══════════════════════════════════════════════════════════════════ -->
+
+  <!-- Snippets Library Modal -->
+  <div id="snippets-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Code Snippets Library</h3>
+        <button class="modal-close" onclick="document.getElementById('snippets-modal').classList.add('hidden')">&times;</button>
+      </div>
+      <div id="snippets-list"></div>
+    </div>
+  </div>
+
+  <!-- Save Snippet Modal -->
+  <div id="save-snippet-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="save-snippet-title">
+    <div class="modal-content save-snippet-content">
+      <div class="modal-header">
+        <h3 id="save-snippet-title">Save snippet</h3>
+        <button class="modal-close" type="button" data-close-save-snippet aria-label="Close save dialog">&times;</button>
+      </div>
+      <label class="save-snippet-field" for="snippet-name-input">
+        <span>Snippet name</span>
+        <input id="snippet-name-input" class="text-input" type="text" maxlength="80" placeholder="e.g. authentication review" autocomplete="off" />
+      </label>
+      <div class="save-snippet-actions">
+        <button class="btn btn-ghost" type="button" data-close-save-snippet>Cancel</button>
+        <button id="confirm-save-snippet" class="btn btn-primary" type="button">Save snippet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Modal -->
+  <div id="shortcuts-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Keyboard Shortcuts</h3>
+        <button class="modal-close" onclick="document.getElementById('shortcuts-modal').classList.add('hidden')">&times;</button>
+      </div>
+      <div class="shortcuts-help">
+        <div class="shortcuts-list">
+          <div class="shortcut-item"><kbd>Ctrl + Enter</kbd><span>Submit current form</span></div>
+          <div class="shortcut-item"><kbd>Ctrl + K</kbd><span>Open snippets library</span></div>
+          <div class="shortcut-item"><kbd>Ctrl + /</kbd><span>Toggle shortcuts help</span></div>
+          <div class="shortcut-item"><kbd>Ctrl + Shift + T</kbd><span>Toggle theme</span></div>
+          <div class="shortcut-item"><kbd>Ctrl + Shift + S</kbd><span>Save as snippet</span></div>
+          <div class="shortcut-item"><kbd>Ctrl + 1-4</kbd><span>Switch tabs</span></div>
+          <div class="shortcut-item"><kbd>Esc</kbd><span>Close modals</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Templates Modal -->
+  <div id="templates-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Review Templates</h3>
+        <button class="modal-close" onclick="document.getElementById('templates-modal').classList.add('hidden')">&times;</button>
+      </div>
+      <div class="templates-grid">
+        <button class="template-card" onclick="applyTemplate('security')">
+          <div class="template-icon" aria-hidden="true">♢</div>
+          <div class="template-name">Security Audit</div>
+          <div class="template-desc">Focus on security vulnerabilities and authentication</div>
+        </button>
+        <button class="template-card" onclick="applyTemplate('performance')">
+          <div class="template-icon" aria-hidden="true">↗</div>
+          <div class="template-name">Performance Review</div>
+          <div class="template-desc">Find bottlenecks and optimization opportunities</div>
+        </button>
+        <button class="template-card" onclick="applyTemplate('accessibility')">
+          <div class="template-icon" aria-hidden="true">♿︎</div>
+          <div class="template-name">Accessibility Check</div>
+          <div class="template-desc">WCAG compliance and screen reader support</div>
+        </button>
+        <button class="template-card" onclick="applyTemplate('bestPractices')">
+          <div class="template-icon" aria-hidden="true">✓</div>
+          <div class="template-name">Best Practices</div>
+          <div class="template-desc">Coding standards and maintainability</div>
+        </button>
+        <button class="template-card" onclick="applyTemplate('bugHunt')">
+          <div class="template-icon" aria-hidden="true">◉</div>
+          <div class="template-name">Bug Detection</div>
+          <div class="template-desc">Logic errors and edge cases</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics Modal -->
+  <div id="stats-modal" class="modal hidden">
+    <div class="modal-content" style="max-width: 1000px;">
+      <div class="modal-header">
+        <h3>Statistics Dashboard</h3>
+        <button class="modal-close" onclick="document.getElementById('stats-modal').classList.add('hidden')">&times;</button>
+      </div>
+      <div id="stats-content"></div>
+    </div>
+  </div>
+
+  <!-- Floating Action Button -->
+  <div class="fab-container">
+    <div id="fab-menu" class="fab-menu">
+      <div class="fab-menu-item" onclick="document.getElementById('snippets-modal').classList.remove('hidden'); keyboardShortcuts.renderSnippetsList();">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 3h10M3 8h6M3 13h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Snippets</span>
+      </div>
+      <div class="fab-menu-item" onclick="document.getElementById('templates-modal').classList.remove('hidden');">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M2 5h12M2 8h8M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Templates</span>
+      </div>
+      <div class="fab-menu-item" onclick="document.getElementById('stats-modal').classList.remove('hidden'); document.getElementById('stats-content').innerHTML = statsDashboard.render();">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="10" width="3" height="4" fill="currentColor"/><rect x="6.5" y="6" width="3" height="8" fill="currentColor"/><rect x="11" y="2" width="3" height="12" fill="currentColor"/></svg>
+        <span>Statistics</span>
+      </div>
+      <div class="fab-menu-item" onclick="document.getElementById('shortcuts-modal').classList.remove('hidden');">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M5 7v2M8 7v2M11 7v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Shortcuts</span>
+      </div>
+    </div>
+    <button class="fab" id="fab-btn" aria-label="Open tools" onclick="document.getElementById('fab-menu').classList.toggle('show')">
+      <span aria-hidden="true">+</span>
+    </button>
+  </div>
+
+  <script src="script.js?v=4"></script>
+  <script src="features.js?v=2"></script>
+  <script src="advanced-features.js?v=2"></script>
+</body>
+</html>

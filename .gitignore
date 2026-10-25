@@ -1,0 +1,22 @@
+# Local environment and credentials
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# Installed dependencies and generated database files
+backend/node_modules/
+backend/data/*
+!backend/data/.gitkeep
+*.db
+*.db-shm
+*.db-wal
+.bob-shell/
+
+# Local Python environment
+.venv/
+
+# Logs and operating-system/editor files
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/
