@@ -9,9 +9,11 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: BOB_API_KEY
+      - key: AI_API_KEY
         sync: false
-      - key: BOB_TEAM_ID
-        sync: false
+      - key: AI_API_URL
+        value: https://api.openai.com/v1/chat/completions
+      - key: AI_MODEL
+        value: gpt-4o-mini
       - key: ALLOWED_ORIGINS
         value: https://code-review-coach.onrender.com
